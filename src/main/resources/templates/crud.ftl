@@ -9,6 +9,15 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css" integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
 </head>
 <body>
+    <nav class="navbar navbar-expand-sm bg-dark">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a href="/logout" class="nav-link btn btn-secondary">Sair da aplicação</a>
+            </li>
+        </ul>
+    </nav>
+
+
     <div class="container-fluid">
         <div class="jumbotron mt-5">
             <h1>GERENCIAMENTO DE CIDADES</h1>
@@ -16,21 +25,38 @@
         </div>
 
         <#if cidadeAtual??>
-            <form action="/alterar" method="post">
+            <form action="/alterar" method="post" class="needs-validation" novalidate>
             <input type="hidden" name="nomeAtual" value="${(cidadeAtual.nome)!}"/>
             <input type="hidden" name="estadoAtual" value="${(cidadeAtual.estado)!}"/>
                 <#else>
-                <form action="/criar" method="post">
+                <form action="/criar" method="post" class="needs-validation" novalidate>
                     </#if>
 
         <form action="/criar" method="post">
             <div class="form-group">
                 <label for="nome">Cidade:</label>
-                <input value="${(cidadeAtual.nome)!}" name="nome" type="text" class="form-control" placeholder="Informe o nome da cidade" id="nome">
+                <input
+                        value="${(cidadeAtual.nome)!}${nomeInformado!}"
+                        name="nome"
+                        type="text"
+                        class="form-control ${(nome??)?then('is-invalid', '')}"
+                        placeholder="Informe o nome da cidade"
+                        id="nome">
+                <div class="invalid-feedback">
+                    ${nome!}
+                </div>
             </div>
             <div class="form-group">
                 <label for="estado">Estado:</label>
-                <input value="${(cidadeAtual.estado)!}" name="estado" type="text" class="form-control" placeholder="Informe o estado ao qual a cidade pertence" id="estado">
+                <input value="${(cidadeAtual.estado)!}${estadoInformado!}"
+                       name="estado"
+                       type="text"
+                       class="form-control ${(estado??)?then('is-invalid', '')}"
+                       placeholder="Informe o estado ao qual a cidade pertence"
+                       id="estado">
+                <div class="invalid-feedback">
+                    ${estado!}
+                </div>
             </div>
             <#if cidadeAtual??>
                 <button type="submit" class="btn btn-warning">CONCLUIR ALTERAÇÃO</button
