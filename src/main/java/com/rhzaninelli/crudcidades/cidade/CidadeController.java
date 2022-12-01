@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -25,7 +27,7 @@ public class CidadeController {
     }
 
     @GetMapping("/")
-    public String listar(Model memoria) {
+    public String listar(Model memoria, Principal usuario, HttpSession sessao) {
 
         memoria.addAttribute("listaCidades", cidadeRepository
                         .findAll()
@@ -33,6 +35,8 @@ public class CidadeController {
                         .map(cidade -> new Cidade(cidade.getNome(), cidade.getEstado()))
                         .collect(Collectors.toList())
                 );
+
+        sessao.setAttribute("usuarioAtual", usuario.getName());
 
         return "/crud";
     }

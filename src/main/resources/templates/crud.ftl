@@ -10,9 +10,13 @@
 </head>
 <body>
     <nav class="navbar navbar-expand-sm bg-dark">
+        <span class="navbar-brand text-white">${Session.usuarioAtual}</span>
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a href="/logout" class="nav-link btn btn-secondary">Sair da aplicação</a>
+                <div class="btn-group">
+                    <a href="/cadastro" class="nav-link btn btn-secondary mx-2">Cadastrar Usuário</a>
+                    <a href="/logout" class="nav-link btn btn-secondary mx-2">Sair da aplicação</a>
+                </div>
             </li>
         </ul>
     </nav>
